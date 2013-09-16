@@ -1,0 +1,16 @@
+{
+    "contents" : "##Intermodal Routing\n#1 Import CSV of cost and time for each trip and notation\ntime_cost <- read.csv(file=\"intermodal_cost_time.csv\",\n                      as.is=T)\nnotation <- read.csv(file=\"notation.csv\",\n                     as.is=T)\n\n#2 Look for the Cost and time for any from-to-route in form of a vector\ncost_time_one_trip <- function(trip){\n df <- time_cost\n #redefine the variables to the names in the cost_time DF\n if(any(notation[\"Abbreviation\"]==trip[1])){\n  trip[1] <- notation[notation[\"Abbreviation\"]==trip[1],1]\n } else {\n  stop(\"No data found for trip, no city with abbreviation in origin\")\n }\n if(any(notation[\"Abbreviation\"]==trip[2])){\n  trip[2] <- notation[notation[\"Abbreviation\"]==trip[2],1]\n } else {\n  stop(\"No data found for trip, no city with abbreviation in destination\")\n }\n if(any(notation[\"Abbreviation\"]==trip[3])){\n  trip[3] <- notation[notation[\"Abbreviation\"]==trip[3],1]\n } else {\n  stop(\"No data found for trip, no transportation method\")\n }\n #Find the trip \n selection <- df[c(df[[\"Start_node\"]]==trip[1] & \n      df[[\"End_node\"]]==trip[2] & \n      df[[\"Mode\"]]==trip[3]),]\n #Get Cost and Time for trip\n if(dim(selection)[1]==0){\n  stop(\"No data found for trip\")\n } else {\n  cost_time_vector <- c(selection[[4]],selection[[5]])\n  cost_time_vector\n }\n}\n\n#3 make a function that handles a list and sums the cost and times of trips\ncost_time_trip_list <- function(...){\n full_trip_list <- list(...)\n cost_time_trips <- sapply(full_trip_list,cost_time_one_trip,simplify=T,\n                           USE.NAMES=F)\n row.names(cost_time_trips) <- c(\"Cost_Usdlls\",\"Time_days\")\n apply(cost_time_trips,1,sum)\n}\n\n##Testing the function\ntrip1 <- c(\"VAN\",\"L.A.\",\"t\")\ntrip2 <- c(\"L.A.\",\"E.P.\",\"r\")\ntrip3 <- c(\"E.P.\",\"M.C.\",\"t\")\na <- cost_time_trip_list(trip1,trip2,trip3)\na\n\n\n",
+    "created" : 1379292950103.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3431970730",
+    "id" : "71912832",
+    "lastKnownWriteTime" : 1379310416,
+    "path" : "~/Rwork1/GitLocal/logi-syst/Intermodal_routing.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}
