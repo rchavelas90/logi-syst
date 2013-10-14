@@ -51,6 +51,7 @@ trip1 <- c("VAN","L.A.","t")
 trip2 <- c("L.A.","E.P.","r")
 trip3 <- c("E.P.","M.C.","t")
 a <- cost_time_trip_list(trip1,trip2,trip3)
-a
+plot(c(-100,-100),c(100,100))
+abline(a=a[1],b=a[2])
 
 
