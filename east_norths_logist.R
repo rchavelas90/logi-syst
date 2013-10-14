@@ -1,6 +1,7 @@
 # Haversine formula is appropriate for calculating distances from lat/long
 
-EarthRad=6371000 ##R# [in meters]
+EarthRad=6371000 ##R# [in meters] 
+
 haverDist<-function(aLong,aLat,bLong,bLat){
  dLat=2*pi*(bLat-aLat)/360.0; dLon=2*pi*(bLong-aLong)/360.0
  a=(sin(dLat/2))^2+cos(2*pi*aLat/360)*cos(2*pi*bLat/360)*(sin(dLon/2)^2)
