@@ -1,1 +1,1 @@
-Prueba de ReadMe!! \*/
+Examples of logistics algorithms with R
